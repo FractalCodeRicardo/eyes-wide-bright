@@ -16,7 +16,7 @@
 
 ## Usage
 
-To use **Eyes Wide Bright** with [LazyVim](https://github.com/LazyVim/LazyVim), add the plugin to your plugin list and configure it like this:
+To use **Eyes Wide Bright** with [Lazy](https://github.com/folke/lazy.nvim), add the plugin to your plugin list and configure it like this:
 
 ```lua
 {
