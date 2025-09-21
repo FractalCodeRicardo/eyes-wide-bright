@@ -28,7 +28,20 @@ To use **Eyes Wide Bright** with [LazyVim](https://github.com/LazyVim/LazyVim), 
     end
 }
 ```
+## 🎥 Video Sample Usage
 
+See **Eyes Wide Bright** in action in this demonstration:
+
+[![Eyes Wide Bright Demo](https://img.youtube.com/vi/8CGfOMWHGj8/0.jpg)](https://www.youtube.com/watch?v=8CGfOMWHGj8)
+
+Click the image above to watch the video on YouTube.  
+
+In this video, you’ll see:
+
+- How to adjust brightness levels using the default keymaps  
+- Switching between modes: `normal`, `warm`, and `cold`  
+- Restoring your original theme
+  
 ## Default Keymaps
 
 The plugin comes with the following default keymaps:
