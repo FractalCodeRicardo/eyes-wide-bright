@@ -1,7 +1,29 @@
 local models = require("eyes-wide-bright.models")
 local utils = require("eyes-wide-bright.utils")
+local config = require("eyes-wide-bright.config")
 
 local M = {}
+
+local INCREASE = 10;
+local factors = {
+    warm = {
+        r = 0.9,
+        g = 0.6,
+        b = 0.2
+    },
+
+    cold = {
+        r = 0.6,
+        g = 0.6,
+        b = 0.9
+    },
+
+    normal = {
+        r = 1,
+        g = 1,
+        b = 1
+    }
+}
 
 ---@return table<string, Color>
 M.get_colors = function()
@@ -13,6 +35,24 @@ M.get_colors = function()
     return colors
 end
 
+M.get_factor = function()
+    local current_config = config.get_current_config()
+    local factor = factors[current_config.mode]
+
+    return factor
+end
+
+M.get_factor_decrease = function(factor_color)
+    if (factor_color == 1) then
+        return INCREASE;
+    end
+
+    return (INCREASE - (INCREASE * factor_color))
+end
+
+M.get_factor_increase = function(factor_color)
+    return INCREASE * factor_color
+end
 
 ---@param number number
 M.decrease = function(number)
@@ -20,10 +60,16 @@ M.decrease = function(number)
         return nil
     end
 
+    local factor = M.get_factor()
     local r, g, b = utils.int_to_rgb(number)
-    r = math.max(r - 10, 0)
-    g = math.max(g - 10, 0)
-    b = math.max(b - 10, 0)
+
+    local fr = M.get_factor_decrease(factor.r)
+    local fg = M.get_factor_decrease(factor.g)
+    local fb = M.get_factor_decrease(factor.b)
+
+    r = math.max(r - fr, 0)
+    g = math.max(g - fg, 0)
+    b = math.max(b - fb, 0)
 
     return utils.rgb_to_int(r, g, b)
 end
@@ -34,10 +80,16 @@ M.increase = function(number)
         return nil
     end
 
+    local factor = M.get_factor() 
     local r, g, b = utils.int_to_rgb(number)
-    r = math.min(r + 10, 255)
-    g = math.min(g + 10, 255)
-    b = math.min(b + 10, 255)
+
+    local fr = M.get_factor_increase(factor.r)
+    local fg = M.get_factor_increase(factor.g)
+    local fb = M.get_factor_increase(factor.b)
+
+    r = math.min(r + fr, 255)
+    g = math.min(g + fg, 255)
+    b = math.min(b + fb, 255)
 
     return utils.rgb_to_int(r, g, b)
 end
